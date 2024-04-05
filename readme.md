@@ -70,10 +70,6 @@ You can customize this template with specific details about your AI model demos 
 👉 **Advanced RTK Query API Requests**: Utilizes the advanced capabilities of Redux Toolkit (RTK) Query for making API requests. These requests fire conditionally based on specific criteria, optimizing data fetching and management.
 
 👉 **AI Model Demos:** Explore the capabilities of ChatGPT through interactive demonstrations showcasing different use cases and applications.
-👉 **Vite Framework:** Utilized Vite for fast development and hot module reloading during development.
-👉 **React.js:** Built the user interface components using React.js for a seamless and interactive experience.
-👉 **Redux:** Employed Redux for efficient state management, ensuring data consistency across the application.
-👉 **Tailwind CSS:** Styled the website with Tailwind CSS for efficient and responsive design.
 
 and many more, including code architecture and reusability
 
