@@ -4,29 +4,20 @@ import { copy, linkIcon, loader, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
-    /*
-useState to keep track of current article value.
-
-
-setArticle function sets article value to the one
-that is passed into the function (inside the text input field)
-*/
   const [article, setArticle] = useState({
     url: "",
     summary: "",
   });
-  //setting up hook to store recently searched articles instead of just 1
-//will store up to 5 at any given point
   const [allArticles, setAllArticles] = useState([]);
   const [copied, setCopied] = useState("");
 
-  //  lazy query
+  // RTK lazy query
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
-  // Load data from localStorage 
+  // Load data from localStorage on mount
   useEffect(() => {
     const articlesFromLocalStorage = JSON.parse(
-      localStorage.getItem("articles") //retrieve article data
+      localStorage.getItem("articles")
     );
 
     if (articlesFromLocalStorage) {
@@ -34,13 +25,7 @@ that is passed into the function (inside the text input field)
     }
   }, []);
 
-  /*
-handleSubmit function is async function (will come back to clarify in future commits)
-takes in an event (form being submitted) and once it does thats when we'll make
-our api call (coming in future commit)
-*/
   const handleSubmit = async (e) => {
-    //prevents default browser behavior on refresh
     e.preventDefault();
 
     const existingArticle = allArticles.find(
@@ -49,7 +34,7 @@ our api call (coming in future commit)
 
     if (existingArticle) return setArticle(existingArticle);
 
-    const { data } = await getSummary({ articleUrl: article.url }); //if successsful (ai success in extracting summary) create a new article and store summary data inside
+    const { data } = await getSummary({ articleUrl: article.url });
     if (data?.summary) {
       const newArticle = { ...article, summary: data.summary };
       const updatedAllArticles = [newArticle, ...allArticles];
@@ -67,7 +52,7 @@ our api call (coming in future commit)
     navigator.clipboard.writeText(copyUrl);
     setTimeout(() => setCopied(false), 3000);
   };
-//key press down to sort thru articles
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       handleSubmit(e);
@@ -78,18 +63,16 @@ our api call (coming in future commit)
     <section className='mt-16 w-full max-w-xl'>
       {/* Search */}
       <div className='flex flex-col w-full gap-2'>
-        {/* on submit of form passing a reference to our function handleSubmit to api call */}
         <form
           className='relative flex justify-center items-center'
           onSubmit={handleSubmit}
         >
-            {/* Link icon, subject to change */}
           <img
             src={linkIcon}
             alt='link-icon'
             className='absolute left-0 my-2 ml-3 w-5'
           />
-{/*  search bar where url will be placed  */}
+
           <input
             type='url'
             placeholder='Paste the article link'
